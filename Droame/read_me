@@ -1,0 +1,18 @@
+====================================== Project Description =============================================
+
+This is a web application that includes both frontend and backend
+which is used to store, edit and delete the details in the database.
+
+
+====================================== Tools Used =============================================
+
+FrontEnd => HTML, CSS, JavaScript
+BackEnd => Django, SQL
+
+
+====================================== Steps to run the code =============================================
+
+
+Step1 :- Install necessary libraries => "pip install -r requirements.txt"
+step2 :- start the server => "python manage.py runserver"
+step3 :- open the server generated website link in the browser to view the website.

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Droame Web project</title>
+</head>
+<style>
+    @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css");
+    @import url('https://fonts.googleapis.com/css2?family=EB Garamond&display=swap');
+    
+    body{
+        background : #010101;
+        color : #F1ECE1;
+        position : relative;
+    }
+    .table{
+        display : flex;
+        flex-direction : column;
+        justify-content : center;
+        align-items : center;
+        z-index : 0;
+        position : absolute;
+        border-color : #214E3A;
+    }
+    .heading th{
+        font-size : 21px;
+        font-style : italic;
+        padding : 2px 3px;
+        color : #0EBD95;
+    }
+    .row td{
+        font-size : 17px;
+        text-align : center;
+        font-family : 'EB Garamond';
+    }
+    .edit{
+        cursor : pointer;
+        color : #C9C911;
+        padding : 3px;
+    }
+    .delete{
+        cursor : pointer;
+        color : #E21;
+        padding : 3px;
+    }
+    .form{
+        position : absolute;
+        left : 50vw;
+        top : 50vh;
+        transform : translate(-50%, -50%);
+        z-index : 3;
+        width : 400px;
+        height : 500px;
+        border : 1px solid #333;
+        border-radius : 11px;
+        visibility : hidden;
+        transition : 0.1s ease-in-out;
+        box-shadow : 1px 1px 11px #F3F3F3;
+    }
+    .form form{
+        width : 100%;
+        height : 100%;
+        display : flex;
+        flex-direction : column;
+        justify-content : space-evenly;
+        align-items : center;
+        background : #010101;
+        border-radius : 11px;
+    }
+    .form form label{
+        width : 100%;
+        display : flex;
+        justify-content : space-evenly;
+    }
+    .form form label span{
+        width : 34%;
+        font-size : 19px;
+    }
+    .form form label input{
+        width : 40%;
+        outline : none;
+        border : none;
+        border-bottom : 1px solid #777;
+        background : transparent;
+        color : #B3B3B3;
+        font-size : 15px;
+        text-align : center;
+    }
+    .buttons{
+        width : 100%;
+        display : flex;
+        justify-content : space-around;
+        align-items : center;
+    }
+    .buttons input{
+        font-size : 19px;
+        width : 23%;
+        cursor : pointer;
+        border-radius : 13px;
+        aspect-ratio : 3/1.57;
+        background : #C6C6C6;
+        color : #000;
+    }
+    input[type="time"]::-webkit-calendar-picker-indicator{
+        cursor: pointer;
+    }
+    .create{
+        position : absolute;
+        right : 50px;
+        top : 10px;
+        border : 1px solid #777;
+        width : 70px;
+        aspect-ratio : 3/1.9;
+        border-radius : 11px;
+        display : flex;
+        justify-content : center;
+        align-items : center;
+        cursor : pointer;
+        font-size : 19px;
+        background : #222;
+        color : #B3B3B3;
+        opacity : 0.8;
+    }
+    .create:hover{
+        opacity : 1;
+        box-shadow : 0 0 7px #fff;
+    }
+    .create i{
+        font-size : 25px;
+        font-weight : 700;
+    }
+</style>
+<body>
+<div class="main">
+    <div class="create">
+        <i class="bi bi-plus"></i>
+        <span>Add</span>
+    </div>
+    <table class="table" border="1">
+        <tr class="heading">
+            <th>pk</th>
+            <th>Customer ID</th>
+            <th>Customer Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Booking ID</th>
+            <th>Location ID</th>
+            <th>Drone Shot ID</th>
+            <th>Created Time</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        {% for row in data %}
+            <tr class="row">
+                <td>{{row.pk}}</td>
+                <td>{{row.customer_id}}</td>
+                <td>{{row.customer_name}}</td>
+                <td>{{row.email}}</td>
+                <td>{{row.phone_number}}</td>
+                <td>{{row.booking_id}}</td>
+                <td>{{row.location_id}}</td>
+                <td>{{row.drone_shot_id}}</td>
+                <td class="time">{{row.created_time}}</td>
+                <td class="edit">
+                    <i class="bi bi-pencil-square"></i>
+                    <span>edit</span>
+                </td>
+                <td class="delete">
+                    <i class="bi bi-trash3"></i>
+                    <span>delete</span>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    
+    <div class="form">
+        <form method="post">
+            {% csrf_token %}
+            <label style="display : none;">
+                <span></span>
+                <input type="text" name="pk">
+            </label>
+            <label>
+                <span>customer id : </span>
+                <input type="text" name="customer_id">
+            </label>
+            <label>
+                <span>customer name : </span>
+                <input type="text" name="customer_name">
+            </label>
+            <label>
+                <span>email :</span>
+                <input type="text" name="email">
+            </label>
+            <label>
+                <span>phone number :</span>
+                <input type="text" name="phone_number">
+            </label>
+            <label>
+                <span>Booking id :</span>
+                <input type="text" name="booking_id">
+            </label>
+            <label>
+                <span>location id :</span>
+                <input type="text" name="location_id">
+            </label>
+            <label>
+                <span>drone shot id :</span>
+                <input type="text" name="drone_shot_id">
+            </label>
+            <label>
+                <span>created time :</span>
+                <input type="time" name="created_time">
+            </label>
+            <div class="buttons">
+                <input type="submit" class="submit" value="Submit">
+                <input type="button" class="cancel" value="Cancel">
+            </div>
+            
+        </form>
+    </div>
+</div>
+</body>
+<script>
+    //Convert time from AM and PM to HH:MM format and set that values in the html page
+
+    window.onload = () => {
+            let eles = document.querySelectorAll('.time');
+            for(let i = 0; i < eles.length; i++){
+                eles[i].innerHTML = convertTime(eles[i].innerHTML);
+            }
+        }
+    
+    // Function to Covert time to HH:MM format
+    
+    function convertTime(time) {
+        let [hours, minutes, period] = time.split(/[:\s]/);
+        hours = parseInt(hours);
+        if (period === "PM" && hours !== 12) {
+             hours += 12;
+        }
+        if (period === "AM" && hours === 12) {
+           hours = 0;
+        }
+        return `${hours.toString().padStart(2, "0")}:${minutes.padStart(2, "0")}`;
+    }
+    
+    // to handle the edit button click event
+    
+    let eles = document.querySelectorAll('.edit');
+    
+    for(let i = 0; i < eles.length; i++){
+        eles[i].addEventListener('click', () => {
+            setValues(i);
+            document.querySelector('.form').style.visibility = 'visible';
+            let all = document.querySelector('.main').children;
+            for(let i = 0; i < all.length; i++){
+                all[i].style.opacity = '0.3';
+            }
+            document.querySelector('.form').style.opacity = '1';
+            document.querySelector('.form form').action = 'edit';
+        })
+    }
+    
+    
+    // set values in the form that is used to display the values and provide edit option to the operator
+    function setValues(i){
+        let customer_details = document.querySelectorAll('.row')[i].children;
+        let form_details = document.querySelector('.form > form').children;
+    
+        console.log(form_details);
+        for(let index = 1; index < form_details.length - 1; index++){
+            form_details[index].children[1].value = customer_details[index-1].innerHTML;
+        }
+    
+    }
+    
+    // when cancel button is clicked
+    
+    document.querySelector('.cancel').addEventListener('click', () => {
+        let all = document.querySelector('.main').children;
+                for(let i = 0; i < all.length; i++){
+                    all[i].style.opacity = '1';
+                }
+        document.querySelector('.form').style.visibility = 'hidden';
+    })
+    
+    // when delete record button is clicked
+    
+    let delete_eles = document.querySelectorAll('.delete');
+    
+    for(let i = 0; i < delete_eles.length; i++){
+        delete_eles[i].addEventListener('click', () => {
+            setValues(i);
+            document.querySelector('.form form').action = 'delete';
+            document.querySelector('.form form').submit();
+        })
+    }
+    
+    // when operator clicks the new button to create new record
+    
+    document.querySelector('.create').addEventListener('click', () => {
+        document.querySelector('.form').style.visibility = 'visible';
+    
+    
+    
+        let all = document.querySelector('.main').children;
+            for(let i = 0; i < all.length; i++){
+                all[i].style.opacity = '0.3';
+            }
+        document.querySelector('.form').style.opacity = '1';
+    
+        let form_details = document.querySelector('.form > form').children;
+    
+    
+        for(let index = 1; index < form_details.length - 1; index++){
+            form_details[index].children[1].value = "";
+        }
+    
+        document.querySelector('.form > form').action = 'create';
+    })
+
+</script>
+</html>
